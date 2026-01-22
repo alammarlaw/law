@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>آراء العملاء - شركة عبدالاله العمار للمحاماة</title>
+  <link rel="icon" href="h1.png">
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --navy: #0b2b44;
+      --navy-2: #072233;
+      --gold: #c9a04b;
+      --gold-2: #b5862f;
+      --muted: #f5f5f7;
+      --text: #0f1720;
+      --card-bg: #ffffff;
+    }
+
+    /* Reset & Global */
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; font-family: 'Tajawal', system-ui, -apple-system, sans-serif; background: var(--muted); color: var(--text); }
+    a { color: inherit; text-decoration: none; }
+    
+    /* Animations */
+    .fade-in { animation: fadeIn 0.8s ease forwards; opacity: 0; transform: translateY(10px); }
+    @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
+
+    /* Header & Nav (Consistent with other pages) */
+    .header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: linear-gradient(180deg, rgba(11,43,68,0.98), rgba(11,43,68,0.9));
+      color: #ffffff; backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    .header-inner { display: flex; align-items: center; justify-content: space-between; height: 74px; }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .logo { width: 40px; height: 40px; }
+    .brand h1 { margin: 0; font-size: 18px; letter-spacing: 0.4px; }
+    .header-actions { display: flex; gap: 12px; align-items: center; }
+
+    /* Hero Section Specific to Clients Page */
+    .page-hero {
+      padding: 140px 0 60px;
+      background: linear-gradient(135deg, var(--navy-2), var(--navy));
+      color: #fff;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-hero::before {
+      content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: radial-gradient(circle at 50% 50%, rgba(201, 160, 75, 0.1), transparent 60%);
+    }
+    .page-hero h2 { font-size: 36px; margin-bottom: 10px; color: var(--gold); }
+    .page-hero p { font-size: 18px; opacity: 0.9; max-width: 600px; margin: 0 auto; }
+
+    /* Reviews Stats */
+    .stats-bar {
+      background: #fff;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      margin-top: -40px;
+      position: relative;
+      z-index: 10;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .stat-item { text-align: center; }
+    .stat-num { font-size: 32px; font-weight: 800; color: var(--navy); }
+    .stat-label { color: #666; font-size: 14px; }
+    .stars-display { color: #f39c12; font-size: 20px; letter-spacing: 2px; }
+
+    /* Reviews Grid */
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+      padding: 60px 0;
+    }
+    .review-card {
+      background: #fff;
+      padding: 24px;
+      border-radius: 14px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid rgba(0,0,0,0.03);
+    }
+    .review-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      border-color: var(--gold);
+    }
+    .review-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+    .reviewer-info { display: flex; align-items: center; gap: 10px; }
+    .avatar {
+      width: 45px; height: 45px; background: var(--muted); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: bold; color: var(--navy); font-size: 18px;
+    }
+    .reviewer-name { font-weight: 700; color: var(--navy); font-size: 16px; }
+    .review-date { font-size: 12px; color: #999; }
+    .review-stars { color: #f39c12; font-size: 14px; }
+    .review-text { color: #555; line-height: 1.6; font-size: 15px; }
+
+    /* Review Form Section */
+    .form-section {
+      background: #fff;
+      padding: 60px 0;
+      border-top: 1px solid #eee;
+    }
+    .form-container {
+      max-width: 700px;
+      margin: 0 auto;
+      background: var(--muted);
+      padding: 40px;
+      border-radius: 20px;
+    }
+    .form-title { text-align: center; margin-bottom: 30px; }
+    .form-title h3 { color: var(--navy); margin: 0 0 10px; font-size: 24px; }
+    
+    .form-group { margin-bottom: 20px; }
+    .form-input, .form-textarea {
+      width: 100%; padding: 14px; border: 1px solid #ddd; border-radius: 10px;
+      font-family: inherit; outline: none; transition: 0.3s;
+    }
+    .form-input:focus, .form-textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,160,75,0.1); }
+    
+    /* Star Rating Input */
+    .rating-input { display: flex; flex-direction: row-reverse; justify-content: center; gap: 8px; margin-bottom: 20px; }
+    .rating-input input { display: none; }
+    .rating-input label { cursor: pointer; font-size: 30px; color: #ccc; transition: 0.2s; }
+    .rating-input input:checked ~ label,
+    .rating-input label:hover,
+    .rating-input label:hover ~ label { color: #f39c12; }
+
+    .submit-btn {
+      width: 100%; background: linear-gradient(90deg, var(--navy), var(--navy-2));
+      color: #fff; padding: 16px; border: none; border-radius: 10px;
+      font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s;
+    }
+    .submit-btn:hover { background: var(--gold); color: var(--navy); }
+
+    /* Footer (Same as index) */
+    footer { background: var(--navy-2); color: #eaf0f5; padding: 40px 20px; margin-top: auto; }
+    .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    
+    /* Sidebar */
+
+    /* Responsive & Mobile Luxury */
+    @media (max-width: 768px) {
+      /* Header */
+      .header-inner { height: 64px; }
+      .logo { width: 34px; height: 34px; }
+      .brand h1 { font-size: 15px; }
+      .brand div[style] { font-size: 10px !important; opacity: 0.8; }
+
+      /* Hero */
+      .page-hero { padding: 110px 0 60px; }
+      .page-hero h2 { font-size: 26px; padding: 0 15px; line-height: 1.4; }
+      .page-hero p { font-size: 15px; padding: 0 20px; opacity: 0.9; }
+
+      /* Stats Bar - Luxury List Style */
+      .stats-bar {
+        /* Revert to horizontal layout */
+        padding: 20px 15px;
+        gap: 10px;
+        margin-top: -30px;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      }
+      .stat-item {
+        flex: 1; /* Allow items to grow and shrink to fill space */
+      }
+      .stat-num { font-size: 26px; }
+      .stat-label { font-size: 13px; }
+
+      /* Reviews & Form */
+      .reviews-grid { grid-template-columns: 1fr 1fr; gap: 16px; padding: 50px 0; }
+      .review-card { padding: 20px; }
+      .reviewer-name { font-size: 15px; }
+      .review-text { font-size: 14px; line-height: 1.5; }
+      .avatar { width: 40px; height: 40px; font-size: 16px; }
+      .form-container { padding: 30px 20px; border-radius: 16px; }
+      .rating-input label { font-size: 34px; padding: 0 4px; }
+
+      /* Footer */
+      .footer-grid { grid-template-columns: 1fr; text-align: center; gap: 30px; }
+      .footer-grid ul { justify-content: center; margin-top: 15px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-inner">
+        <div class="brand">
+          <a href="index.html"><img src="a4.png" alt="شعار" class="logo"></a>
+          <div>
+            <h1>شركة عبدالاله العمار و شركاؤه</h1>
+            <div style="font-size:11px;opacity:0.8;">للمحاماة و الاستشارات القانونية</div>
+          </div>
+        </div>
+        <div class="header-actions">
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="page-hero">
+    <div class="container fade-in">
+      <h2>آراء العملاء وشركاء النجاح</h2>
+      <p>نفخر بثقة عملائنا ونسعى دائماً لتقديم أفضل الخدمات القانونية التي ترقى لتطلعاتهم.</p>
+    </div>
+  </section>
+
+  <!-- Content Container -->
+  <div class="container">
+    
+    <!-- Stats Bar -->
+    <div class="stats-bar fade-in" style="animation-delay: 0.2s;">
+      <div class="stat-item">
+        <div class="stat-num" id="consultations-count">+350</div>
+        <div class="stat-label">استشارة قانونية</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num" id="successful-cases">+600</div>
+        <div class="stat-label">قضية ناجحة</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num" id="client-satisfaction">98%</div>
+        <div class="stat-label">نسبة رضا العملاء</div>
+      </div>
+    </div>
+
+    <!-- Reviews Grid -->
+    <div class="reviews-grid" id="reviewsContainer"></div>
+  </div>
+
+  <!-- Review Form Section -->
+  <section class="form-section">
+    <div class="container">
+      <div class="form-container fade-in">
+        <div class="form-title">
+          <h3>شاركنا تجربتك</h3>
+          <p style="color:#777;">رأيك يهمنا ويساعدنا على التطور المستمر</p>
+        </div>
+        
+        <form id="reviewForm">
+          <div class="rating-input">
+            <input type="radio" id="star5" name="rating" value="5" required /><label for="star5" title="ممتاز">★</label>
+            <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="جيد جداً">★</label>
+            <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="جيد">★</label>
+            <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="مقبول">★</label>
+            <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="سيء">★</label>
+          </div>
+
+          <div class="form-group">
+            <input type="text" class="form-input" name="name" placeholder="الاسم الكامل" required>
+          </div>
+          
+          <div class="form-group">
+            <input type="text" class="form-input" name="type" placeholder="صفة التعامل (مثال: عميل فرد، شركة..)">
+          </div>
+
+          <div class="form-group">
+            <textarea class="form-textarea" name="comment" rows="4" placeholder="اكتب تعليقك هنا..." required></textarea>
+          </div>
+
+          <button type="submit" class="submit-btn">إرسال التقييم</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <h4 style="margin:0 0 8px;color:var(--gold)">مكتب المحاماة</h4>
+        <p class="muted" style="color:#ffffff;">العنوان: الرياض - طريق الملك سلمان - برج الرميح<br>هاتف: 2128 060 55 966+<br>البريد: info@alammarlaw.com</p>
+      </div>
+      <div>
+        <h4 style="margin:0 0 8px;color:var(--gold)">روابط سريعة</h4>
+        <ul style="padding:0;margin:0;list-style:none;display:flex;gap:10px;align-items:center;">
+          <li>
+            <a href="https://x.com/alammar_law1" target="_blank" style="display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:var(--gold);color:var(--navy);">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="16" height="16" fill="currentColor"><path d="M389.2 48H473L305.1 232.2L503 464H372.6L257.7 324.2L126.9 464H43.8L221.1 267.5L27 48H161.5L264.3 175.3L389.2 48Z"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.snapchat.com/add/alammar_law" target="_blank" style="display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:var(--gold);color:var(--navy);">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="16" height="16" fill="currentColor">
+                <path d="M224 0C100.3 0 0 100.3 0 224c0 92.6 59.6 171.5 142.1 202.3-2.1-18.8-4.8-46.8 1.2-67.1 5.3-18.7 34.1-118.3 34.1-118.3s-8.7-17.4-8.7-43.1c0-40.4 23.4-70.6 52.5-70.6 24.8 0 36.7 18.6 36.7 40.9 0 25-15.9 62.2-24.1 96.9-6.8 28.9 14.4 52.5 42.6 52.5 51.1 0 85.4-54.1 85.4-132.1 0-68.9-49.4-117.4-120.1-117.4-81.9 0-129.9 61.5-129.9 125.2 0 24.7 9.5 51.1 21.4 65.6 2.4 2.9 2.7 5.5 2 8.4-2.2 9.2-7.2 29.4-8.1 33.6-1.2 5.2-4.1 6.3-9.5 3.8-35.5-16.5-57.8-68.3-57.8-110.2 0-89.5 65.1-171.8 188.1-171.8 99.3 0 176.3 70.9 176.3 165.9 0 98.6-62.3 178.2-148.7 178.2-29 0-56.3-15.1-65.6-32.7l-17.8 67.9c-6.5 24.6-24.2 55.4-36.1 74 27.1 8.4 55.8 13 85.6 13 123.7 0 224-100.3 224-224S347.7 0 224 0z"/>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.tiktok.com/@alammar_law" target="_blank" style="display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:var(--gold);color:var(--navy);">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="16" height="16" fill="currentColor">
+                <path d="M448 209.9a210.1 210.1 0 0 1-122.3-39.4v141.2a200.1 200.1 0 1 1-200-200.1 195.2 195.2 0 0 1 29.2 2.2v82.3a118.6 118.6 0 1 0 83.3 113.5V0h81.3a129.6 129.6 0 0 0 128.5 129.7Z"/>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.youtube.com/@alammar-law" target="_blank" style="display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:var(--gold);color:var(--navy);">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" width="16" height="16" fill="currentColor">
+                <path d="M549.7 124.1c-6.3-23.7-24.8-42.4-48.4-48.7C458.8 64 288 64 288 64s-170.8 0-213.3 11.4c-23.6 6.3-42.1 25-48.4 48.7C16 166.6 16 256 16 256s0 89.4 10.3 131.9c6.3 23.7 24.8 42.4 48.4 48.7C117.2 448 288 448 288 448s170.8 0 213.3-11.4c23.6-6.3 42.1-25 48.4-48.7C560 345.4 560 256 560 256s0-89.4-10.3-131.9zM232 336V176l142 80-142 80z"/>
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // --- CONFIGURATION ---
+    // الصق رابط الـ Web App الذي نسخته من Google Apps Script هنا
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwJqt1je5kpjx9V5jg8rTU37ugoQ-U3VOmJ_eL4x5wHMv7SyzhnPQwAF-o9UYEvK5MZbQ/exec";
+
+    // --- FORM SUBMISSION LOGIC ---
+    document.getElementById('reviewForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const btn = this.querySelector('.submit-btn');
+      const originalText = btn.innerText;
+      const form = this;
+
+      btn.innerText = 'جاري الإرسال...';
+      btn.style.opacity = '0.8';
+      btn.disabled = true;
+
+      fetch(SCRIPT_URL, {
+        method: 'POST',
+        body: new FormData(form)
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.result === 'success') {
+          btn.innerText = 'تم الإرسال بنجاح ✓';
+          btn.style.background = '#28a745';
+          form.reset();
+          // تحديث التقييمات والإحصائيات بعد الإرسال الناجح
+          setTimeout(fetchAndRenderData, 1000);
+        } else {
+          throw new Error(data.error || 'حدث خطأ غير متوقع');
+        }
+      })
+      .catch(error => {
+        console.error('Error!', error.message);
+        btn.innerText = 'فشل الإرسال!';
+        btn.style.background = '#dc3545';
+      })
+      .finally(() => {
+        setTimeout(() => {
+          btn.innerText = originalText;
+          btn.style.background = '';
+          btn.style.opacity = '1';
+          btn.disabled = false;
+        }, 4000);
+      });
+    });
+
+    // --- ANIMATION & RENDERING LOGIC ---
+    function animateValue(obj, start, end, duration, suffix = '') {
+      let startTimestamp = null;
+      const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        const current = Math.floor(progress * (end - start) + start);
+        obj.innerHTML = current + suffix;
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+        }
+      };
+      window.requestAnimationFrame(step);
+    }
+
+    function renderReviews(reviews) {
+      const container = document.getElementById('reviewsContainer');
+      if (!reviews || reviews.length === 0) {
+        container.innerHTML = '<p style="text-align:center;color:#777;">لا توجد تقييمات لعرضها حالياً. كن أول من يشاركنا تجربته!</p>';
+        return;
+      }
+
+      // --- تعديل: تحديد عدد التقييمات التي ستظهر (مثلاً، أحدث 12 تقييم) ---
+      const reviewsToDisplay = reviews.slice(0, 6);
+
+      let html = '';
+      reviewsToDisplay.forEach((review, index) => {
+        const stars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
+
+        html += `
+          <div class="review-card fade-in" style="animation-delay: ${0.1 + (index * 0.05)}s;">
+            <div class="review-header">
+              <div class="reviewer-info">
+                <div class="avatar">${review.avatar}</div>
+                <div>
+                  <div class="reviewer-name">${review.name}</div>
+                  <div class="review-date">${review.date}</div>
+                </div>
+              </div>
+              <div class="review-stars">${stars}</div>
+            </div>
+            <p class="review-text">${review.text}</p>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+    }
+
+    // --- MAIN FUNCTION TO FETCH AND DISPLAY DATA ---
+    function fetchAndRenderData() {
+      fetch(SCRIPT_URL)
+        .then(response => response.json())
+        .then(data => {
+          if (data.error) throw new Error(data.error);
+
+          // Animate stats with fetched data
+          animateValue(document.getElementById('consultations-count'), 0, data.stats.consultations, 2000, '+');
+          animateValue(document.getElementById('successful-cases'), 0, data.stats.successfulCases, 2000, '+');
+          animateValue(document.getElementById('client-satisfaction'), 0, data.stats.satisfaction, 2000, '%');
+
+          // Render reviews from fetched data
+          renderReviews(data.reviews);
+        })
+        .catch(error => {
+          console.error('Failed to fetch reviews:', error);
+          document.getElementById('reviewsContainer').innerHTML = '<p style="text-align:center;color:red;">حدث خطأ في تحميل التقييمات.</p>';
+          // Fallback to default numbers on error
+          animateValue(document.getElementById('consultations-count'), 0, 350, 2000, '+');
+          animateValue(document.getElementById('successful-cases'), 0, 600, 2000, '+');
+          animateValue(document.getElementById('client-satisfaction'), 0, 98, 2000, '%');
+        });
+    }
+
+    // --- INITIALIZE ON PAGE LOAD ---
+    document.addEventListener('DOMContentLoaded', fetchAndRenderData);
+  </script>
+</body>
+</html>
