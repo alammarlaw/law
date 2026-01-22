@@ -21,7 +21,7 @@
 
     /* Reset & Global */
     * { box-sizing: border-box; }
-    html, body { height: 100%; margin: 0; font-family: 'Tajawal', system-ui, -apple-system, sans-serif; background: var(--muted); color: var(--text); }
+    html, body { height: 100%; margin: 0; font-family: 'Tajawal', system-ui, -apple-system, sans-serif; background: var(--muted); color: var(--text); overflow-x: hidden; display: flex; flex-direction: column; }
     a { color: inherit; text-decoration: none; }
     
     /* Animations */
@@ -84,6 +84,7 @@
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 24px;
       padding: 60px 0;
+      justify-content: center;
     }
     .review-card {
       background: #fff;
@@ -195,9 +196,27 @@
       .footer-grid { grid-template-columns: 1fr; text-align: center; gap: 30px; }
       .footer-grid ul { justify-content: center; margin-top: 15px; }
     }
+
+    /* Preloader Styles */
+    #loader-wrapper {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: var(--navy-2); z-index: 99999;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      transition: opacity 0.6s ease, visibility 0.6s;
+    }
+    .loader-spinner {
+      width: 50px; height: 50px;
+      border: 4px solid rgba(201, 160, 75, 0.2);
+      border-top: 4px solid var(--gold);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
+  <!-- Preloader -->
+  <div id="loader-wrapper"><div class="loader-spinner"></div></div>
 
   <!-- Header -->
   <header class="header">
@@ -446,6 +465,15 @@
 
     // --- INITIALIZE ON PAGE LOAD ---
     document.addEventListener('DOMContentLoaded', fetchAndRenderData);
+
+    // --- PRELOADER LOGIC ---
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const loader = document.getElementById('loader-wrapper');
+        loader.style.opacity = '0';
+        loader.style.visibility = 'hidden';
+      }, 5000); // 5 seconds delay
+    });
   </script>
 </body>
 </html>
