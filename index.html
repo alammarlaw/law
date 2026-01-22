@@ -183,8 +183,13 @@
       .stat-label { font-size: 13px; }
 
       /* Reviews & Form */
-      .reviews-grid { grid-template-columns: 1fr 1fr; gap: 16px; padding: 50px 0; }
-      .review-card { padding: 20px; }
+      .reviews-grid {
+        display: flex; overflow-x: auto; gap: 16px; padding: 20px 5px 40px;
+        grid-template-columns: none; scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch; scrollbar-width: none;
+      }
+      .reviews-grid::-webkit-scrollbar { display: none; }
+      .review-card { min-width: 85%; max-width: 85%; flex-shrink: 0; padding: 20px; margin: 0; }
       .reviewer-name { font-size: 15px; }
       .review-text { font-size: 14px; line-height: 1.5; }
       .avatar { width: 40px; height: 40px; font-size: 16px; }
@@ -451,6 +456,9 @@
 
           // Render reviews from fetched data
           renderReviews(data.reviews);
+          
+          // Start Mobile Auto Scroll
+          startMobileScroll();
         })
         .catch(error => {
           console.error('Failed to fetch reviews:', error);
@@ -460,6 +468,25 @@
           animateValue(document.getElementById('successful-cases'), 0, 600, 2000, '+');
           animateValue(document.getElementById('client-satisfaction'), 0, 98, 2000, '%');
         });
+    }
+
+    // --- MOBILE AUTO SCROLL ---
+    function startMobileScroll() {
+      if (window.innerWidth > 768) return;
+      const container = document.getElementById('reviewsContainer');
+      if (!container) return;
+      
+      setInterval(() => {
+        // In RTL, scrolling negative X moves to the left (next items)
+        const cardWidth = container.querySelector('.review-card').offsetWidth + 16;
+        const maxScroll = container.scrollWidth - container.clientWidth;
+        
+        if (Math.abs(container.scrollLeft) >= maxScroll - 10) {
+          container.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          container.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+        }
+      }, 2000);
     }
 
     // --- INITIALIZE ON PAGE LOAD ---
